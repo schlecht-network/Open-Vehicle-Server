@@ -56,7 +56,7 @@ sub new
 sub start
   {
   AE::log info => "- - - starting HTTP server listener on port tcp/6868";
-  $http_server = AnyEvent::HTTPD->new (port => 6868, request_timeout => 30, allowed_methods => ['GET','PUT','POST','DELETE']);
+  $http_server = AnyEvent::HTTPD->new (port => 6868, host => '::', request_timeout => 30, allowed_methods => ['GET','PUT','POST','DELETE']);
   $http_server->reg_cb ( %registrations );
 
   $http_server->reg_cb (
@@ -81,7 +81,7 @@ sub start
   if (-e $pemfile)
     {
     AE::log info => "- - - starting HTTPS server listener on port tcp/6869";
-    $https_server = AnyEvent::HTTPD->new (port => 6869, request_timeout => 30, ssl  => { cert_file => $pemfile }, allowed_methods => ['GET','PUT','POST','DELETE']);
+    $https_server = AnyEvent::HTTPD->new (port => 6869, host => '::', request_timeout => 30, ssl  => { cert_file => $pemfile }, allowed_methods => ['GET','PUT','POST','DELETE']);
     $https_server->reg_cb ( %registrations );
 
     $https_server->reg_cb (
